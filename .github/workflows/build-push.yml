@@ -80,7 +80,7 @@ jobs:
       with:
         push: false
         tags: my-app2:latest
-        cache-from: type=registry,ref=localhost:5000/my-app:lates
+        cache-from: type=registry,ref=localhost:5000/my-app:latest
       
     # - name: Build Docker image using cache
     #   run: |
