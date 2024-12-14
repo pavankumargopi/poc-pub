@@ -68,4 +68,5 @@ jobs:
         
     - name: Check 
       run: |
+        docker pull localhost:5000/my-app:latest
         docker image ls -a
