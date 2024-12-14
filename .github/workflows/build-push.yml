@@ -80,7 +80,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: false
-        pull: false
+        pull: true
         tags: my-app:latest
     # - name: Build Docker image using cache DockerfileTwo
     #   run: |
