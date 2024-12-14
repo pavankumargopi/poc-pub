@@ -15,16 +15,14 @@ jobs:
       # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-          
-      # - name: Build Docker image and push
-      #   run: |
-      #    docker buildx build -o - . > my-app.tar
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: false
           tags: my-app:latest
           outputs: type=docker,dest=/tmp/myimage.tar
+          cache-to: type=inline
 
       - name: Upload Docker image as artifact
         uses: actions/upload-artifact@v4
@@ -33,7 +31,7 @@ jobs:
          path: /tmp/myimage.tar
           
       
-  use-and-cache:
+  re-build-from-artifacts:
     runs-on: ubuntu-latest
     services:
       registry:
@@ -57,43 +55,28 @@ jobs:
         name: myimage
         path: /tmp
       
-    - name: Display structure of downloaded files
-      run: ls -R
-      
     - name: Load Docker image
       run: |
         docker load --input /tmp/myimage.tar
         docker image ls -a
-        
-    - name: Build and push
-      uses: docker/build-push-action@v6
-      with:
-        load: true
-        tags: localhost:5000/my-app:latest
-    # - name: Push to local Docker registry
-    #   run: |
-    #     docker image tag my-app localhost:5000/my-app:latest
-    #     # docker tag my-app:latest localhost:5000/my-app:latest
-    #     docker push localhost:5000/my-app:latest
-    #     docker image ls -a
+      
+    - name: Push to local Docker registry
+      run: |
+        docker image tag my-app localhost:5000/my-app:latest
+        docker push localhost:5000/my-app:latest
+        docker image ls -a
         
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Build and push
+    - name: Rebuild using local registry cache
       uses: docker/build-push-action@v6
       with:
         push: true
         pull: true
-        cache-from: type=registry,ref=localhost:5000/my-app:latest
         tags: localhost:5000/my-app:latest
+        cache-from: type=registry,ref=localhost:5000/my-app:latest
         
     - name: Check 
       run: |
         docker image ls -a
-    # - name: Build Docker image using cache DockerfileTwo
-    #   run: |
-    #     docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/my-app:latest -t localhost:5000/my-image:fromcache .
-    #     # docker buildx build --cache-from=type=registry,ref=localhost:5000/my-app:latest .
-    #     # docker push localhost:5000/my-app:latest
-    #     docker image
