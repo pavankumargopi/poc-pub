@@ -49,4 +49,7 @@ jobs:
           push: true
           pull: true
           tags: localhost:5000/my-app:latest
+      - name: Inspect
+        run: |
+          docker buildx imagetools inspect localhost:5000/my-app:latest
           
