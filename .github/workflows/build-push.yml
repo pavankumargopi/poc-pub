@@ -50,7 +50,6 @@ jobs:
       uses: docker/setup-buildx-action@v3
       with:
         driver-opts: network=host
-        driver: docker
        
     - name: Download Docker image artifact
       uses: actions/download-artifact@v4
@@ -87,7 +86,7 @@ jobs:
         push: true
         pull: true
         cache-from: type=registry,ref=localhost:5000/my-app:latest
-        tags: my-app:latest
+        tags: localhost:5000/my-app:latest
         
     - name: Check 
       run: |
