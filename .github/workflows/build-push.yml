@@ -28,7 +28,7 @@ jobs:
       - name: build and push
         run: |
           docker buildx create --name temp_cache
-          docker buildx build --builder temp_cache --output type=docker,dest=/tmp/myimage.tar .
+          docker buildx build --builder temp_cache -t my-app:latest --output type=docker,dest=/tmp/myimage.tar .
 
       - name: Upload Docker image as artifact
         uses: actions/upload-artifact@v4
