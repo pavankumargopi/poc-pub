@@ -70,7 +70,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         load: true
-        tags: my-app:latest
+        tags: localhost:5000/my-app:latest
     # - name: Push to local Docker registry
     #   run: |
     #     docker image tag my-app localhost:5000/my-app:latest
