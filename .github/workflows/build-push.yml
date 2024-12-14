@@ -81,6 +81,7 @@ jobs:
       with:
         push: false
         pull: true
+        load: true
         tags: my-app:latest
         
     - name: Check 
