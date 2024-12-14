@@ -82,6 +82,10 @@ jobs:
         push: false
         pull: true
         tags: my-app:latest
+        
+    - name: Check 
+      run: |
+        docker image ls -a
     # - name: Build Docker image using cache DockerfileTwo
     #   run: |
     #     docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=localhost:5000/my-app:latest -t localhost:5000/my-image:fromcache .
