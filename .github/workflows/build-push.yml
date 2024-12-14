@@ -85,7 +85,7 @@ jobs:
     - name: build and push
       run: |
         docker buildx create --name temp_cache
-        docker buildx build --push --builder temp_cache --pull -t localhost:5000/my-app:latest .
+        docker buildx build --builder temp_cache --pull -t localhost:5000/my-app:latest .
         
     - name: Check 
       run: |
