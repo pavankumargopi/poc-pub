@@ -40,6 +40,7 @@ jobs:
       - name: Build and push 2
         uses: docker/build-push-action@v6
         with:
+          file: DockerfileTwo
           push: true
           pull: true
           tags: localhost:5000/my-app:latest
